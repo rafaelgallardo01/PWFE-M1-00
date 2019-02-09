@@ -1,0 +1,150 @@
+body {
+	color: #333333;
+	font-family: Arial;
+	font-size: 20px;
+	margin: 0;
+}
+a {
+	color: #eae6ca ;
+	text-decoration: none;
+}
+a:hover { color: #ffff00 }
+
+#top,
+#content figcaption,
+#copyright {
+color: #555555;
+
+
+}
+
+#top {
+background-color: #333333;
+padding: 10px;
+/*Flexbox*/
+display: flex;
+flex-flow: row;
+align-items: center;  /*flex-start  -- center flex-end -- space-arond-- space- betweeen*/
+justify-content: flex-start;
+}
+
+#top h1{
+	margin: 0;
+	font-size: 32px;
+}
+#menu { margin-left: auto }
+#menu ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	overflow: hidden;
+}
+#menu ul li { float: left }
+#menu ul li a {
+display: block;
+padding: 10px;
+text-align: center;
+}
+
+#menu ul li a:hover {
+color: #ffff00;
+background-color: #333666;
+}
+#menu ul li:nth-of-type(2) a {
+/*background-color: grey; */
+}
+
+#content {
+	color: #444444;
+	
+}
+#content figure:{
+	margin: 0;
+	
+
+}
+#content figcaption:{
+
+	padding: 15px;
+}
+#content h2 {
+	margin: 0;
+	font-size: 36px;
+	color: #333333;
+
+
+}
+#content img {
+display: block;
+width: 100%
+
+}
+.noticia-img, .noticia-text
+{
+	float: left;
+	padding: 10px;
+	box-sizing: border-box;  /*content-box, border-box */
+
+}
+.noticias {
+	padding: 10px;
+	border-bottom: solid 1px #CCCCCC;
+    overflow: hidden;
+ /*   margin-left: 15px;
+    margin-right: 15px: */
+    margin: 0 10px;
+
+}
+
+.noticia-img {
+	width: 30%;
+}
+.noticia-text {
+	width: 70%;
+}
+.noticia-text h3 {
+
+margin: 10px 0;
+font-size: 32px;
+
+}
+
+#tabla-posiciones table {
+ 	border: solid 1px; #CCCCCC;
+	border-collapse: collapse;
+	margin: auto;
+	width: 600px;
+
+}
+#tabla-posiciones tr {
+	border-bottom: solid 1px #CCCCCC;
+
+}
+#tabla-posiciones td,
+#tabla-posiciones th {
+	padding: 10px;
+
+}
+#tabla-posiciones td:nth-of-type(odd) {
+	font-weight: bold;
+	font-size: 32px;
+	text-align: center;
+
+}
+#tabla-posiciones td strong {
+	color: green
+}
+
+#copyright padding:  {
+	color: #ffffff
+	margin: 0;
+	padding: 15pc;
+	text-align: center;
+	font-size: 14px;
+
+}
+@media screen and (min-width: 320px) and ( max-width: 480px){
+	#menu {
+		display: none;
+	}
+}
