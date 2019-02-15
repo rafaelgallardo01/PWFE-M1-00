@@ -17,10 +17,10 @@
 Adafruit_BMP085 bme;
 float temperature, humidity, pressure, altitude; 
  
-RF24 radio(2, 15);    // Set up nRF24L01 radio on SPI bus plus pins 2 for CE and 15 for CSN
+RF24 radio(2, 15);   
    
 
-int ti=0; //количество отправленных запросов
+int ti=0; 
 const char* www_username = "rafael";
 const char* www_password = "23208210";
 const char* ssid = "Speedy-6885BC";
@@ -30,7 +30,7 @@ const char* password = "1426110744";
 const long utcOffsetInSeconds = -10800;
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-// Define NTP Client to get time
+
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "south-america.pool.ntp.org", utcOffsetInSeconds);
 
@@ -38,7 +38,7 @@ float h, t, s, l, m, n;
 const char* serverIndex = "<form method='POST' action='/update' enctype='multipart/form-data'><input type='file' name='update'><input type='submit' value='Update'></form>";
   
 ESP8266WebServer server(80); 
-void handleNotFound(){ //страница ошибок
+void handleNotFound(){ 
  
   String message = "File Not Found\n\n";
   message += "URI: ";
@@ -82,7 +82,7 @@ api += "Pressure in:\n";
 api += pressure;
 api += "\n";
 api += "\n";
-api += "Altitude int:\n";   // давление BMP180
+api += "Altitude int:\n";   
 api += altitude; 
 api += "\n";
 api += "\n";
@@ -91,7 +91,7 @@ api += ti ;
 api += "\n";
 api += "\n";
 api += "DHT\n";  
-api += "Temperature ext:\n";  // Температура BMP180
+api += "Temperature ext:\n";  
 api += t ; 
 api += "\n";
 api += "\n";
@@ -125,15 +125,15 @@ void setup(void){
   SPI.begin();
   SPI.setDataMode(SPI_MODE0);
   SPI.setBitOrder(MSBFIRST);   
-    radio.begin();                                        // Инициируем работу nRF24L01+
-    radio.setChannel(115);                                  // Указываем канал приёма данных (от 0 до 127), 5 - значит приём данных осуществляется на частоте 2,405 ГГц (на одном канале может быть только 1 приёмник и до 6 передатчиков)
-    radio.setDataRate     (RF24_1MBPS);                   // Указываем скорость передачи данных (RF24_250KBPS, RF24_1MBPS, RF24_2MBPS), RF24_1MBPS - 1Мбит/сек
-    radio.setPALevel      (RF24_PA_HIGH);                 // Указываем мощность передатчика (RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, RF24_PA_MAX=0dBm)
-    radio.openReadingPipe (1, 0x1234567890LL);            // Открываем 1 трубу с идентификатором 0x1234567890 для приема данных (на ожном канале может быть открыто до 6 разных труб, которые должны отличаться только последним байтом идентификатора)
-    radio.startListening  ();                             // Включаем приемник, начинаем прослушивать открытую трубу
+    radio.begin();                                      
+    radio.setChannel(115);                                  
+    radio.setDataRate     (RF24_1MBPS);                
+    radio.setPALevel      (RF24_PA_HIGH);                 
+    radio.openReadingPipe (1, 0x1234567890LL);          
+    radio.startListening  ();                           
 //  radio.stopListening   (); 
     Serial.begin(115200);  
-    WiFi.mode(WIFI_STA); //режим клиент
+    WiFi.mode(WIFI_STA); 
     WiFi.begin(ssid, password);  
     while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -145,14 +145,14 @@ void setup(void){
 
     
 server.on("/", api);
-server.on("/reset", [](){                     // Перезагрузка
+server.on("/reset", [](){                    
      if(!server.authenticate(www_username, www_password))
       return server.requestAuthentication();  
     server.send(200, "text/plain", "ok");
     ESP.restart();    
      });          
- server.onNotFound(handleNotFound);          //  Cтраница ошибки
-server.on("/test", HTTP_GET, [](){          //   Обновление
+ server.onNotFound(handleNotFound);         
+server.on("/test", HTTP_GET, [](){         
        if(!server.authenticate(www_username, www_password))
       return server.requestAuthentication();  
       server.sendHeader("Connection", "close");
@@ -170,7 +170,7 @@ server.on("/test", HTTP_GET, [](){          //   Обновление
         Serial.setDebugOutput(true);
         WiFiUDP::stopAll();         
         uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
-        if(!Update.begin(maxSketchSpace)){//start with max available size
+        if(!Update.begin(maxSketchSpace)){
           Update.printError(Serial);
           }
       } else if(upload.status == UPLOAD_FILE_WRITE){
@@ -178,7 +178,7 @@ server.on("/test", HTTP_GET, [](){          //   Обновление
           Update.printError(Serial);
         }
       } else if(upload.status == UPLOAD_FILE_END){
-        if(Update.end(true)){ //true to set the size to the current progress           
+        if(Update.end(true)){      
         } else {
           Update.printError(Serial);
         }
@@ -194,8 +194,8 @@ void loop(void){
 
  server.handleClient();
  float data[6];   
- if(radio.available()){                                // Если в буфере имеются принятые данные
- radio.read(&data, sizeof(data));                  // Читаем данные в массив data и указываем сколько байт читать     
+ if(radio.available()){                             
+ radio.read(&data, sizeof(data));                     
   h=data[0]; 
   t=data[1];
   s=data[2];  
