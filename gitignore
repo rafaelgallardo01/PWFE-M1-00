@@ -1,0 +1,5 @@
+En linux los programas se instalan en su sitio:
+- Los binarios en /usr/bin
+- Las librerías en /usr/lib
+- Los archivos de configuración en /etc
+- Los archivos de configuración PERSONAL en /home/tuusuario 
