@@ -12,7 +12,38 @@ sudo chmod +x install.sh
 
 ./install.sh    ./install.shinstall.sh
 
+Instalar fuentes desde la terminal
+La instalación de las fuentes mediante la terminal es igual de sencillo que gráficamente, con la ventaja de que lo haces todo desde una misma ventana. Este procedimiento podemos hacerlo directamente.
 
+Primeramente nos situamos en el directorio en donde se descargó la fuente, «Descargas».
+
+cd Descargas
+
+Descomprimimos el archivo.
+
+unzip season_of_the_witch
+
+Una vez descompromido, nos logueamos como root
+
+su
+
+Creamos una carpeta con el nombre de la fuente en el directorio de destino (si el nombre tiene palabras separadas se pone entre comillas. De lo contrario la terminal interpreta cada palabra como diferentes directorios)
+
+mkdir /usr/share/fonts/"Season_of_the_witch"
+
+Copiamos el archivo al directorio de destino.
+
+cp Season_of_the_Witch.ttf /usr/share/fonts/"Seasons_of_the_witch"
+
+Nos situamos en el directorio
+
+cd /usr/share/fonts/"Seasons_of_the_witch"
+
+Cambiamos los permisos del archivo
+
+chmod +w “Season_of_the_Witch.ttf"
+
+Y listo, tenemos nuestra fuente instalada.
 
 ----------------------------------
   sudo

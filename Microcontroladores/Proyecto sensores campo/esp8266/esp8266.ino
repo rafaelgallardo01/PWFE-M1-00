@@ -1,5 +1,7 @@
 //nRF24L01 - ESP8266 12
 
+
+
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
@@ -11,12 +13,14 @@
 #include <Hash.h>
 #include <Wire.h>
 #include <Adafruit_BMP085.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 #define SEALEVELPRESSURE_HPA (27.1272)
 Adafruit_BMP085 bme;
 float temperature, humidity, pressure, altitude;
 
-RF24 radio(2, 15);
+RF24 radio(0, 15);
 
 int ti = 0;
 const char *www_username = "rafael";
@@ -60,7 +64,7 @@ void api()
   api += WiFi.RSSI();
   api += "\n";
   api += "\n";
-  api += "Hora nodo0:\n";
+  api += "Hora nodo:\n";
   api += (timeClient.getFormattedTime());
   api += "\n";
   api += "\n";
@@ -178,11 +182,32 @@ void setup(void)
       }
       yield(); });
   server.begin();
+  delay(500);
   timeClient.begin();
+  delay(500);
+  lcd.begin(); //Init with pin default ESP8266 or ARDUINO
 }
 void loop(void)
 {
-  timeClient.update();
+  timeClient.update();  
+  lcd.backlight();  
+  lcd.setCursor(0, 0);  
+  lcd.print("Nodo");
+  lcd.print(timeClient.getFormattedTime());
+  lcd.setCursor(0, 1);
+  lcd.print("IP=");   
+  lcd.print(WiFi.localIP()); 
+  lcd.setCursor(0, 2);
+  lcd.print("WiFi.RSSI=");
+  lcd.print(WiFi.RSSI());
+  lcd.setCursor(0, 3);  
+  lcd.print("RF=");
+  lcd.print(ti);
+  lcd.setCursor(0, 4);  
+
+ 
+    // Turn on the blacklight and print a message.
+  lcd.backlight(); 
 
   server.handleClient();
   float data[5];
@@ -199,4 +224,5 @@ void loop(void)
   temperature = bme.readTemperature();
   pressure = bme.readPressure() / 100.0F;
   altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
-}
+
+ }
