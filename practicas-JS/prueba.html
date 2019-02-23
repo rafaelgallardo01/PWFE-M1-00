@@ -1,4 +1,18 @@
 <script>
-	
+	// datos de origen "determinado" (harcodeado) 
+var cadena = ('Hola Clase desde una Variable!');// "tipo string"
+var entero = 18; // tipo "int"
+var  flotante = 25.80; //tipo "float"
+var binario = true; // tipo "bool"
 
-</script>
+// datos de oriegen "indeterminado"
+var numero = 100*1.21; //" determinable luego de una operacion logica"/matematica
+var email = prompt ("Ingrese su direccion de email"); // determinable por el ususario
+
+if(email ==""){//<-- Si esta vacio ...
+	//CODIGO INERTE 
+alert("ERROR, e-mail no ingresado :(");
+} else {//<-- Si no est vaciio...
+	alert("Su e-mail es:"  + email);
+}
+</script>	
