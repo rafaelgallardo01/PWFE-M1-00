@@ -1,8 +1,6 @@
 //nRF24L01 - ESP8266 12
 
 
-
-#include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <NTPClient.h>
@@ -20,10 +18,10 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 Adafruit_BMP085 bme;
 float temperature, humidity, pressure, altitude;
 
-RF24 radio(0, 15);
+RF24 radio(2, 15);
 
 int ti = 0;
-const char *www_username = "rafael";
+const char *www_username = "administrador";
 const char *www_password = "23208210";
 const char *ssid = "Speedy-6885BC";
 const char *password = "1426110744";
@@ -33,6 +31,7 @@ char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "south-america.pool.ntp.org", utcOffsetInSeconds);
+#define buzzer 16
 
 float h, t, s, l, m;
 const char *serverIndex = "<form method='POST' action='/update' enctype='multipart/form-data'><input type='file' name='update'><input type='submit' value='Update'></form>";
@@ -92,7 +91,6 @@ void api()
   api += ti;
   api += "\n";
   api += "\n";
-  api += "DHT\n";
   api += "Temperature ext:\n";
   api += t;
   api += "\n";
@@ -106,15 +104,7 @@ void api()
   api += "ppm\n"; // давление BMP180
   api += "\n";
   api += "\n";
-  api += "luminosidad ext:\n"; // давление BMP180
-  api += l;
-  api += "lux\n"; // давление BMP180
-  api += "\n";
-  api += "\n";
-  api += "Conductivida Suelo ext:\n"; // давление BMP180
-  api += m;
-  api += "\n";
-  api += "\n";
+
   server.send(200, "text/plain", api);
 };
 void setup(void)
@@ -130,6 +120,9 @@ void setup(void)
   radio.openReadingPipe(1, 0x1234567890LL);
   radio.startListening();
   //  radio.stopListening   ();
+  tone(buzzer, 500, 600);      
+  delay(300); 
+  noTone(buzzer);
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -192,19 +185,18 @@ void loop(void)
   timeClient.update();  
   lcd.backlight();  
   lcd.setCursor(0, 0);  
-  lcd.print("Nodo");
   lcd.print(timeClient.getFormattedTime());
   lcd.setCursor(0, 1);
   lcd.print("IP=");   
   lcd.print(WiFi.localIP()); 
   lcd.setCursor(0, 2);
-  lcd.print("WiFi.RSSI=");
-  lcd.print(WiFi.RSSI());
-  lcd.setCursor(0, 3);  
-  lcd.print("RF=");
+  lcd.print("Data=");
   lcd.print(ti);
-  lcd.setCursor(0, 4);  
-
+  lcd.setCursor(0, 3);  
+  lcd.print("T=");
+  lcd.print(temperature);
+  lcd.print(" Ts=");
+  lcd.print(t/17);
  
     // Turn on the blacklight and print a message.
   lcd.backlight(); 

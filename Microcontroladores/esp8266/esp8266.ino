@@ -14,7 +14,7 @@
 
 #define SEALEVELPRESSURE_HPA (27.1272)
 Adafruit_BMP085 bme;
-float temperature, humidity, pressure, altitude;
+float temperature, humidity, pressure, altitude, lux;
 
 RF24 radio(2, 15);
 
@@ -60,54 +60,57 @@ void api()
   api += WiFi.RSSI();
   api += "\n";
   api += "\n";
-  api += "Hora nodo0:\n";
+  api += "Hora nodo=\n";
   api += (timeClient.getFormattedTime());
   api += "\n";
   api += "\n";
-  api += "Ram \n";
+  api += "Ram=\n";
   api += ESP.getFreeHeap();
   api += "\n";
   api += "\n";
-  api += "Chip ID\n ";
+  api += "Chip ID=\n ";
   api += ESP.getChipId();
   api += "\n";
   api += "\n";
-  api += "Temperature in:\n";
+  api += "Temperature=\n";
   api += temperature;
   api += "\n";
   api += "\n";
-  api += "Pressure in:\n";
+  api += "Pressure:\n";
   api += pressure;
   api += "\n";
   api += "\n";
-  api += "Altitude int:\n";
+  api += "Altitude=\n";
   api += altitude;
   api += "\n";
   api += "\n";
-  api += "RF Sent requests:\n";
+  api += "Luminosidad=\n";
+  api +=  lux;
+  api += "\n";
+  api += "\n";
+  api += "RF Sent requests=\n";
   api += ti;
   api += "\n";
   api += "\n";
   api += "DHT\n";
-  api += "Temperature ext:\n";
+  api += "Temperature ext=\n";
   api += t;
   api += "\n";
   api += "\n";
-  api += "Humidity ext:\n"; // давление BMP180
+  api += "Humidity ext=\n"; // давление BMP180
   api += h;
   api += "\n";
   api += "\n";
-  api += "NH3 ext:\n"; // давление BMP180
+  api += "NH3 ext=\n"; // давление BMP180
   api += s;
   api += "ppm\n"; // давление BMP180
   api += "\n";
   api += "\n";
   api += "luminosidad ext:\n"; // давление BMP180
   api += l;
-  api += "lux\n"; // давление BMP180
   api += "\n";
   api += "\n";
-  api += "Conductivida Suelo ext:\n"; // давление BMP180
+  api += "Humedad ext=\n"; // давление BMP180
   api += m;
   api += "\n";
   api += "\n";
@@ -196,6 +199,7 @@ void loop(void)
     m = data[4];
     ti++;
   }
+  lux = analogRead(A0);
   temperature = bme.readTemperature();
   pressure = bme.readPressure() / 100.0F;
   altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);

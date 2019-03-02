@@ -1,21 +1,24 @@
 
 #include <SPI.h>
 #include <SD.h>
+#include <RF24.h>
+#include "RF24.h"
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <Adafruit_BMP085.h>
 
 Adafruit_BMP085 bmp;
 float temperature, humidity, pressure, altitude;
+RF24 radio(2, 15);
 
 const int chipSelect = 0;
 const char *ssid = "Speedy-6885BC";
 const char *password = "1426110744";
-
+int ti = 0;
 // The IP address will be dependent on your local network:
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x20};
 WiFiServer server(80);
-
+float h, t, s, l, m;
 void setup() {
   Serial.begin(9600);
   delay(10);
@@ -115,7 +118,7 @@ if (client) {  // got client?
           client.println();
           client.println("<!DOCTYPE HTML>");
           client.println("<html>");
-          client.print("<h1>Valores de lectura de los puertos analogicos</h1>");
+          client.print("<h1>Valores de lectura</h1>");
           client.print("<p><b>Los valores de A0 son: </b>");
           client.print(dataString);
           client.print("</p>");
