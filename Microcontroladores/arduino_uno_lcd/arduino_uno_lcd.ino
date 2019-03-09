@@ -29,7 +29,8 @@ void setup()
   }
   delay(7000);
   pinMode(pwmPin, INPUT);
-  byte setrangeA_cmd[9] = {0xFF, 0x01, 0x99, 0x00, 0x00, 0x00, 0x13, 0x88, 0xCB}; // задаёт диапазон 0 - 5000ppm
+  digitalWrite(pwmPin, HIGH);
+  byte setrangeA_cmd[9] = {0xFF, 0x01, 0x99, 0x00, 0x00, 0x00, 0x13, 0x88, 0xCB};
   unsigned char setrangeA_response[9]; 
   swSerial.write(setrangeA_cmd,9);
   swSerial.readBytes(setrangeA_response, 9);
@@ -53,7 +54,7 @@ void setup()
    lcd.clear();
    lcd.setCursor(0,0);
    lcd.print("Mini Totem...");
-   delay(500);
+   delay(1000);
    lcd.clear();
    lcd.setCursor(0,0);
    lcd.print("Temperatura");   
@@ -63,67 +64,18 @@ void setup()
    lcd.print("NH1");  
    lcd.setCursor(0,3);
    lcd.print("Co2");
-   delay(500);  
+   delay(1000);
    lcd.clear();
    lcd.setCursor(0,0);
-   lcd.print("Temperatura...");   
+   lcd.print("Temperatura..");   
    lcd.setCursor(0,1);
-   lcd.print("Humedad...");   
+   lcd.print("Humedad..");   
    lcd.setCursor(0,2);
-   lcd.print("NH1...");  
+   lcd.print("NH1..");  
    lcd.setCursor(0,3);
-   lcd.print("Co2...");
-   delay(500);  
-   lcd.clear();
-   lcd.setCursor(0,0);
-   lcd.print("Temperatura");   
-   lcd.setCursor(0,1);
-   lcd.print("Humedad");   
-   lcd.setCursor(0,2);
-   lcd.print("NH1");  
-   lcd.setCursor(0,3);
-   lcd.print("Co2");
-   delay(500);  
-   lcd.clear();
-   lcd.setCursor(0,0);
-   lcd.print("Temperatura...");   
-   lcd.setCursor(0,1);
-   lcd.print("Humedad...");   
-   lcd.setCursor(0,2);
-   lcd.print("NH1...");  
-   lcd.setCursor(0,3);
-   lcd.print("Co2...");
-   delay(500);  
-   lcd.clear();
-   lcd.setCursor(0,0);
-   lcd.print("Temperatura...");   
-   lcd.setCursor(0,1);
-   lcd.print("Humedad...");   
-   lcd.setCursor(0,2);
-   lcd.print("NH1...");  
-   lcd.setCursor(0,3);
-   lcd.print("Co2...");
-   delay(500);  
-   lcd.clear();
-   lcd.setCursor(0,0);
-   lcd.print("Temperatura");   
-   lcd.setCursor(0,1);
-   lcd.print("Humedad");   
-   lcd.setCursor(0,2);
-   lcd.print("NH1");  
-   lcd.setCursor(0,3);
-   lcd.print("Co2");
-   delay(500);  
-   lcd.clear();
-   lcd.setCursor(0,0);
-   lcd.print("Temperatura...");   
-   lcd.setCursor(0,1);
-   lcd.print("Humedad...");   
-   lcd.setCursor(0,2);
-   lcd.print("NH1...");  
-   lcd.setCursor(0,3);
-   lcd.print("Co2...");
-   delay(100); 
+   lcd.print("Co2..");
+   delay(500);   
+  
 }
 void loop(){
   
@@ -211,7 +163,7 @@ void loop(){
    lcd.print("P=");
    lcd.print(bmp.readSealevelPressure());    
    lcd.setCursor(0,1);
-   lcd.print("NH1="); 
+   lcd.print("Cs="); 
    lcd.print(s);  
    lcd.setCursor(10,1);
    lcd.print(" Co2=");

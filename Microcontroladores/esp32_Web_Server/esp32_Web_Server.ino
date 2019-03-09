@@ -1,21 +1,3 @@
-/*
-  ESP32 mDNS responder sample
-
-  This is an example of an HTTP server that is accessible
-  via http://esp32.local URL thanks to mDNS responder.
-
-  Instructions:
-  - Update WiFi SSID and password as necessary.
-  - Flash the sketch to the ESP32 board
-  - Install host software:
-    - For Linux, install Avahi (http://avahi.org/).
-    - For Windows, install Bonjour (http://www.apple.com/support/bonjour/).
-    - For Mac OSX and iOS support is built in through Bonjour already.
-  - Point your browser to http://esp32.local, you should see a response.
-
- */
-
-
 #include <WiFi.h>
 #include <ESPmDNS.h>
 #include <WiFiClient.h>
@@ -40,6 +22,8 @@ const int   daylightOffset_sec = 3600;
 
 // TCP server at port 80 will respond to HTTP requests
 WiFiServer server(80);
+float ip;
+
 
 void printLocalTime()
 {
@@ -107,7 +91,6 @@ void loop(void)
         return;
     }
     if (client) {  // got client?
-      digitalWrite(2, 1);
       // send a standard http response header
       client.println("HTTP/1.1 200 OK");
       client.println("Content-Type: text/html");
@@ -122,16 +105,18 @@ void loop(void)
       client.println("<body>");
       client.println("<h1>Valores</h1>");
       client.println("<p>Temperatura</p>");
-      client.println("<img src=http://eant.tech/imagenes/logo.png>");
+//      client.println("<img src=http://eant.tech/imagenes/logo.png>");
       client.println("</body>");
       client.println("</html>");
      }
     Serial.println("");
     Serial.println("New client");
+    display.drawString(3,33, "New client");
+    delay(100);
 
     // Wait for data from client to become available
     while(client.connected() && !client.available()){
-        delay(1);
+        delay(10);
     }
 
     // Read the first line of HTTP request
@@ -166,16 +151,15 @@ void loop(void)
         s = "HTTP/1.1 404 Not Found\r\n\r\n";
         Serial.println("Sending 404");
     }
-    client.print(s);
 
+  client.print(s);
+  delay(500);
   Serial.println("Done with client");
-  display.drawString(3,0, "ESP32");
-  display.drawString(3,15, ssid);
-  display.drawString(3,33, "IP");
+  display.drawString(3,0, "ip");
+  display.drawString(3,15, req);
   display.drawString(3,46, "           ...");
   display.display();
   delay(2000);
-  
   
   chipid=ESP.getEfuseMac();//The chip ID is essentially its MAC address(length: 6 bytes).
   Serial.printf("ESP32 Chip ID = %04X",(uint16_t)(chipid>>32));//print High 2 bytes
@@ -184,7 +168,6 @@ void loop(void)
   printLocalTime();
 
    // Restart ESP
-  delay(5184000);
-  digitalWrite(2, 0);
+  delay(5000);
   ESP.restart();
 }
