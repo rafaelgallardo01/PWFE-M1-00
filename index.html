@@ -160,7 +160,7 @@
 					noticias.forEach(function(noticia){
 						let plantilla = document.querySelector(".articulo").cloneNode(true)
 
-						plantilla.querySelectro("h3").innertText = noticias.titulo
+						plantilla.querySelectro("h3").innertText = noticia.titulo
 						plantilla.querySelectro(".small a").innertText = noticias.autor
 						plantilla.querySelectro("p:last-child").innertText = noticias.detalle
 						plantilla.querySelectro("img").src = "img/" + noticia.imagen
