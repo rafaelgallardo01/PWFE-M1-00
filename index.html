@@ -88,7 +88,7 @@
 		<!-- INICIO NOTICIAS -->
 		<main class="container-fluid">
 		<!-- Noticia #1 -->
-			<article class="row py-3 mx-0 border-bottom">
+			<article class="row py-3 mx-0 border-bottom articulo">
 				<div class="col-12 col-md-6 col-lg-4">
 					<img src="img/sorteo-libertadores.jpg" class="img-fluid">
 				</div>
@@ -155,8 +155,17 @@
 			ajax.open("GET", "noticias.json"); 
 			ajax.onload = function(){
 				if(ajax.status == 200){
-					alert("Mira en la consola...")
-					console.log( ajax.response )
+					let noticias = JSON.parse(ajax.response)
+
+					noticias.forEach(function(noticia){
+						let plantilla = document.querySelector(".articulo").cloneNode(true)
+
+						plantilla.querySelectro("h3").innertText = noticias.titulo
+						plantilla.querySelectro(".small a").innertText = noticias.autor
+						plantilla.querySelectro("p:last-child").innertText = noticias.detalle
+						plantilla.querySelectro("img").src = "img/" + noticia.imagen
+						plantilla.querySelectro("main").appendChild( plantilla )
+					})
 				}
 			};	
 			ajax.send()			
