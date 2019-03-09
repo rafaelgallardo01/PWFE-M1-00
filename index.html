@@ -161,8 +161,8 @@
 						let plantilla = document.querySelector(".articulo").cloneNode(true)
 
 						plantilla.querySelectro("h3").innertText = noticia.titulo
-						plantilla.querySelectro(".small a").innertText = noticias.autor
-						plantilla.querySelectro("p:last-child").innertText = noticias.detalle
+						plantilla.querySelectro(".small a").innertText = noticia.autor
+						plantilla.querySelectro("p:last-child").innertText = noticia.detalle
 						plantilla.querySelectro("img").src = "img/" + noticia.imagen
 						plantilla.querySelectro("main").appendChild( plantilla )
 					})
