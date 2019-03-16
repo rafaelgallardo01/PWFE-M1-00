@@ -156,19 +156,14 @@
 			ajax.onload = function(){
 				if(ajax.status == 200){
 					let noticias = JSON.parse(ajax.response)
-
 					noticias.forEach(function(noticia){
 						let plantilla = document.querySelector(".articulo").cloneNode(true)
-
 						plantilla.querySelector("h3").innerText = noticia.titulo
 						plantilla.querySelector(".small a").innerText = noticia.autor
 						plantilla.querySelector("p:last-child").innerText = noticia.detalle
 						plantilla.querySelector("img").src = "img/" + noticia.imagen
-
 						document.querySelector("main").appendChild( plantilla )
 					})
-
-
 				}
 			};
 			ajax.send()
