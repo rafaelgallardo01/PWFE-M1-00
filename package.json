@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafaelgallardo01/PWFE-M1-00.git"
+    "url": "git+https://github.com/eant/PWFE-M1-00.git"
   },
-  "author": "Rafael",
+  "author": "SM",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rafaelgallardo01/PWFE-M1-00/issues"
+    "url": "https://github.com/eant/PWFE-M1-00/issues"
   },
-  "homepage": "https://github.com/rafaelgallardo01/PWFE-M1-00#readme",
+  "homepage": "https://github.com/eant/PWFE-M1-00#readme",
   "dependencies": {
     "fs": "0.0.1-security",
     "http": "0.0.0",

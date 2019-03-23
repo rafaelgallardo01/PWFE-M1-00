@@ -1,12 +1,12 @@
 {
   "name": "node_app",
   "version": "1.0.0",
-  "description": "creando una webapp con node.js",
+  "description": "Creando una primer webapp con Node.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "rafael",
+  "author": "SM",
   "license": "ISC",
   "dependencies": {
     "http": "0.0.0"
