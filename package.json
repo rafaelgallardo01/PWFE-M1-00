@@ -23,5 +23,8 @@
     "nodemon": "^1.18.10",
     "path": "^0.12.7",
     "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3"
   }
 }
