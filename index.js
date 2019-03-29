@@ -4,7 +4,6 @@ const path = require("path")
 const form = require("querystring")
 const loki = require("lokijs")
 
-
 const port = 80
 
 let noticias = null;
