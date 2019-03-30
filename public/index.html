@@ -28,6 +28,9 @@
 			<div class="collapse navbar-collapse justify-content-end" id="menu">
 				<ul class="navbar-nav text-center">
 					<li class="nav-item active">
+						<a class="nav-link" href="formulario.html">Agregar noticia</a>
+					</li>					
+					<li class="nav-item">
 						<a class="nav-link" href="#">Fútbol <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
@@ -94,7 +97,9 @@
 				<div class="col-12 col-md-6 col-lg-8">
 					<h3 class="h4 my-3">{{TITULO}}</h3>
 					<p class="small">por <a href="#">{{AUTOR}}</a></p>
-					<p>{{DETALLE}}</p>
+					<p><a href="" class="btn btn-primary">Más info</a></p>
+					<p>{{DETALLE}}</p>			
+					
 				</div>
 			</article>
 			
@@ -152,10 +157,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 		<script>
 			const ajax = new XMLHttpRequest();
-			ajax.open("GET", "noticias.json");
+			ajax.open("GET", "/noticias");
 			ajax.onload = function(){
 				if(ajax.status == 200){
 					let noticias = JSON.parse(ajax.response)
+					let imagenes = ['sorteo-libertadores.jpg','tickets-rusia-mundial.jpg','firpo.jpg','buenos-aires.jpg']
 
 					noticias.forEach(function(noticia){
 						let plantilla = document.querySelector(".articulo").cloneNode(true)
@@ -163,7 +169,12 @@
 						plantilla.querySelector("h3").innerText = noticia.titulo
 						plantilla.querySelector(".small a").innerText = noticia.autor
 						plantilla.querySelector("p:last-child").innerText = noticia.detalle
-						plantilla.querySelector("img").src = "img/" + noticia.imagen
+
+						let imagen = imagenes[ Math.floor( Math.random() * imagenes.length ) ]
+
+						plantilla.querySelector("img").src = "img/" + imagen
+
+						plantilla.querySelector(".btn").href = "noticias/" + noticia.$loki
 
 						document.querySelector("main").appendChild( plantilla )
 					})

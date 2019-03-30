@@ -1,82 +1,51 @@
-const http = require("http")
-const fs = require("fs")
-const path = require("path")
-const form = require("querystring")
+const express = require("express")
+const bodyParser = require("body-parser")
 const loki = require("lokijs")
-
+const app = express()
 const port = 80
-
-let noticias = null;
+let noticiasColeccion = null
 
 let db = new loki("noticias.json", {
     autoload: true,
     autosave: true, 
     autosaveInterval: 4000,
     autoloadCallback : function(){
-    	noticias = db.getCollection("noticias")
-    	if( noticias === null ){
-    		noticias = db.addCollection("noticias")
+    	noticiasColeccion = db.getCollection("noticias")
+    	if( noticiasColeccion === null ){
+    		noticiasColeccion = db.addCollection("noticias")
     	}
-
     }
 })
 
+app.set('view engine','ejs') // Para poder usar EJS
 
-http.createServer(function(request, response){
-	let dir = "./public" //<-- Carpeta del proyecto
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded( {extended: true} ))
+app.use(express.static('public'))
 
-	let file = (request.url == "/") ? "index.html" : request.url //<-- Archivo solicitado
+app.get('/',function(request,response){
+	response.send('Hola')
+})
 
-	if( request.method == "POST" && file == "/enviar" ){
-		//ACA HAY QUE PROCESAR LOS DATOS DEL FORMULARIO...
+app.get('/noticias',function(request,response){
+	let noticias = noticiasColeccion.chain().data() 
+	response.send(noticias)
+})
 
-		request.on("data", function(body){
-
-			let datos = body.toString()
-				datos = form.parse(datos)
-
-			noticias.insert(datos)
-
-			console.log( datos )
-
-			response.end("Mira el archivo noticias.json")
-
-		})
-
-	}
-
-	let ext = String( path.extname(file) ).toLowerCase() //<-- extensiones ".html", ".css", ".js", etc
-
-	let tipos = {
-			".html"	: "text/html",
-			".js"	: "text/javascript",
-			".css"	: "text/css",
-			".txt" 	: "text/plain",
-			".json"	: "application/json",
-			".png"	: "image/png",
-			".jpg"	: "image/jpg",
-			".gif"	: "image/gif",
-			".ico"	: "image/x-icon",
-			".wav"	: "audio/wav",
-			".mp4"	: "video/mp4",
-			".woff"	: "application/font-woff",
-			".ttf"	: "application/font-ttf",
-			".eot"	: "application/vnd.ms-fontobject",
-			".otf"	: "application/font-otf",
-			".svg"	: "application/image/svg+xml"
-	}
-
-	let contenType = tipos[ext] || "application/octet-stream"
-
-	fs.readFile(dir + file, function(error, content){ //<-- "Intentar" leer el recurso solicitado
-
-		if( error ){ //<-- Si hay un error...
-			response.end("Archivo no encontrado :(")
-		} else { //<-- Si lo encontro...
-			response.writeHead(200, { "Content-Type" : contenType })
-			response.end(content)
-		}
-
+app.get('/noticias/:id',function(request,response){
+	let noticiaId = request.params.id
+	let noticia = noticiasColeccion.get(noticiaId)
+	response.render('noticia.ejs',{
+		noticia
 	})
+})
 
-}).listen(port)
+app.post('/noticias',function(request,response){
+	let body = request.body
+	noticiasColeccion.insert(body)
+	response.send(body)
+})
+
+app.listen(port,function(){
+	console.log('Servidor iniciado')
+})
