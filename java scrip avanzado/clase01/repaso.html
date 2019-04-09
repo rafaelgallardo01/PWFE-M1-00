@@ -1,0 +1,28 @@
+<h1>Repaso de JavaScript .</h1>
+<h2>Evoluciones de ES5 a ES6</h2>
+
+<script>
+	let nombre = window.prompt("Como te llamas ?");
+	const hoy = "2019-04-09";
+
+	/*
+	function saludar(){	
+		window.alert("Hola" + nombre)
+	}
+*/
+	const saludar = () => {
+		window.alert(`Hola ${nombre}, que tengas un buen ${hoy}!!!`) 
+	}
+
+	document.querySelector("h1").onclick = saludar;
+
+	document.querySelector("h2").onclick = function(){
+		this.style.color = "red"
+
+		window.alert(`Hoy es ${hoy}`)
+	};
+
+
+
+</script>
+

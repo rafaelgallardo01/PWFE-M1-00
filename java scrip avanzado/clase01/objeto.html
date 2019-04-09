@@ -1,0 +1,72 @@
+<h1>Objeto en JavaScript</h1>
+<script>
+	const Mostrar = function(nombre, precio){
+		console.log(`El producto ${nombre} vale ARS ${precio}`)
+	}
+
+	const crearProducto = function(n, p, s, d){
+		let elProducto = new Object()
+
+		elProducto.nombre = n
+		elProducto.precio = p
+		elProducto.stock = s
+		elProducto.disponible = d
+
+		elProducto.Mostrar = function(){
+			console.log(`El producto ${this.nombre} vale ARS ${this.precio}`)
+		}
+
+		elProducto.Imprimir = function(){
+			document.write(`<p>El producto <strong>${this.nombre}</strong> vale ARS ${this.precio}</p>`)
+		}
+
+		return elProducto
+	}
+////////////////////////////////////////
+	let nombre = "Cafe";
+	let precio = 65.80;
+	let stock = 100;
+	let disponible = true; 
+
+	let unProducto = ["jugo", 55.65, 400, false]
+
+	let otroProducto = {
+		nombre : "Agua",
+		precio : "54.45",
+		stock : 150,
+		disponoble : false
+	}
+
+	let tercerProducto = new Object()
+	tercerProducto.nombre = "Galletitas"
+	tercerProducto.precio = 40.55
+	tercerProducto.stock = 200
+	tercerProducto.disponible = true
+
+	let superProducto = crearProducto("Pan", 85, 100, true)
+	let batiProducto = crearProducto("Azucar", 65.25, 300, false)
+
+	superProducto.nombre = "Pan de Salvado"
+
+	superProducto.Mostrar() ///<-- Ejecutar un "metodo de instancia"
+	batiProducto.Mostrar()
+
+/*
+	Mostrar(nombre, precio)
+	Mostrar(unProducto[0], unProducto[1])
+	Mostrar(otroProducto.nombre, otroProducto.precio)
+	Mostrar(tercerProducto.nombre, tercerProducto.precio)
+
+	Mostrar(superProducto.nombre, superProducto.precio)
+	Mostrar(batiProducto.nombre, batiProducto.precio)
+
+/*
+	console.log(`El producto ${nombre} vale ARS ${precio}`)
+	console.log(`El producto ${unProducto[0]} vale ARS ${unProducto[1]}`)
+	console.log(`El Producto ${otroProducto.nombre} vale ARS ${otroProducto.precio}`)
+	console.log(`El Producto ${tercerProducto.nombre} vale ARS ${tercerProducto.precio}`)
+*/
+
+
+
+</script>
