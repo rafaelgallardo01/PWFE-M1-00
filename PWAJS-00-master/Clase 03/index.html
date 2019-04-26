@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Nerdflix</title>
+		<link rel="shortcut icon" href="img/favicon.ico">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/heroic-features.css">
+		<link rel="stylesheet" href="css/nerdflix.css">
+	</head>
+	<body>
+	    <h1><a class="" href="#"><img src="img/nerdflix.png" class="img-responsive" /></a></h1>
+	
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h3>Ultimos Estrenos</h3>
+				</div>
+			</div>
+			<div class="row text-center" id="peliculas">
+
+				<div class="col-md-3 col-sm-4 pelicula hide">
+					<div class="thumbnail">
+						<img src="img/sin-foto.jpg" alt="">
+						<div class="caption">
+							<h4>TITULO</h4>
+							<p>ESTRENO</p>
+							<p><a href="#playMovie" class="btn btn-primary">Ver ahora</a></p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="container" id="playMovie">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header" id="titulo">TITULO (1900)</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<iframe width="750" height="400" src="img/sin-video.jpg" frameborder="0" allowfullscreen></iframe>
+					<h3>Descripcion:</h3>
+					<p id="descripcion">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem nobis praesentium eum voluptate temporibus, obcaecati quod aspernatur eius modi recusandae, sequi quae. Provident illo eligendi sequi repellat harum, rerum, animi!</p>
+				</div>
+				<div class="col-md-4">
+					<img id="imagen" class="img-responsive" src="img/sin-foto.jpg" alt="">
+				</div>
+			</div>
+		</div>
+		<script src="pelicula.class.js"></script>
+		<script>
+
+			let compromiso = new Promise(function(ok, error){
+
+				if( !window.localStorage.getItem("API_DATA") ){ //<-- Si NO hay un LS con los datos de la API...
+					let ajax = new XMLHttpRequest()
+					ajax.open("GET", "https://api.myjson.com/bins/fiuhw")
+					ajax.onload = function(){
+						if( this.status == 200 ){
+
+							window.localStorage.setItem("API_DATA", this.response)
+
+							ok( this.response )
+
+						} else {
+							error("Ups... falló")
+						}
+					}
+					ajax.send()
+				} else { //<-- Si EFECTIVAMENTE hay un LS con los datos de la API
+					ok( window.localStorage.getItem("API_DATA") )
+				}
+
+			})
+			
+			compromiso.then(function(data){ //<-- recibe los datos de la funcion ok()
+				console.log( Pelicula.parse(data) )
+			})
+			compromiso.catch(function(msg){ //<-- recibe los datos de la funcion error()
+				console.error(msg)
+			})
+
+			//API Storage: localStorage y sessionStorage
+			//window.localStorage.setItem("_DATO", JSON.stringify({ nombre : "pepe", edad : 56 })) // <-- Crear un LS
+			//alert( window.localStorage.getItem("_DATO") )      // <-- Leer un LS
+			//window.localStorage.removeItem("_DATO")   // <-- Borrar un LS
+			//window.localStorage.clear()           // <-- Borrar todos los LS
+
+			
+		</script>
+	</body>
+</html>

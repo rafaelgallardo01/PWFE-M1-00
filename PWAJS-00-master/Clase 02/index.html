@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Nerdflix</title>
+		<link rel="shortcut icon" href="img/favicon.ico">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/heroic-features.css">
+		<link rel="stylesheet" href="css/nerdflix.css">
+	</head>
+	<body>
+	    <h1><a class="" href="#"><img src="img/nerdflix.png" class="img-responsive" /></a></h1>
+	
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h3>Ultimos Estrenos</h3>
+				</div>
+			</div>
+			<div class="row text-center" id="peliculas">
+
+				<div class="col-md-3 col-sm-4 pelicula hide">
+					<div class="thumbnail">
+						<img src="img/sin-foto.jpg" alt="">
+						<div class="caption">
+							<h4>TITULO</h4>
+							<p>ESTRENO</p>
+							<p><a href="#playMovie" class="btn btn-primary">Ver ahora</a></p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="container" id="playMovie">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header" id="titulo">TITULO (1900)</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<iframe width="750" height="400" src="img/sin-video.jpg" frameborder="0" allowfullscreen></iframe>
+					<h3>Descripcion:</h3>
+					<p id="descripcion">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem nobis praesentium eum voluptate temporibus, obcaecati quod aspernatur eius modi recusandae, sequi quae. Provident illo eligendi sequi repellat harum, rerum, animi!</p>
+				</div>
+				<div class="col-md-4">
+					<img id="imagen" class="img-responsive" src="img/sin-foto.jpg" alt="">
+				</div>
+			</div>
+		</div>
+		<script src="pelicula.class.js"></script>
+		<script>
+			
+			let pelicula01 = new Pelicula("Star Wars", "The Rise of Skywalker", 2019, null, "82R2u7OuGOA")
+			let pelicula02 = new Pelicula("Avengers", "Endgame", 2019, "https://nosomosnonos.com/wp-content/uploads/2019/03/endgame.jpeg", "TcMBFSGVi1c")
+			
+			//console.log( pelicula01 )
+
+			pelicula01.Imprimir("#peliculas")
+			pelicula02.Imprimir("#peliculas")
+		</script>
+	</body>
+</html>
