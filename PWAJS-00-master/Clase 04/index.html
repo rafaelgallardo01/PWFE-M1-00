@@ -51,14 +51,34 @@
 				</div>
 			</div>
 		</div>
-		<script src="nerflix.js"></script>
+		<script src="nerdflix.js"></script>
 		<script>
+			const getAPI = function(url){
+				return new Promise((resolve, reject) => {
 
-			let compromiso = new Promise(function(ok, error){
+					let ajax = new XMLHttpRequest()
+					ajax.open("GET", url)
+					ajax.onload = function(){
+						if( this.status == 200 ){ //<-- Respuesta satisfactoria!
+
+							resolve( this.response ) //<-- Lo capturará el .then()
+
+						} else { //<-- Error del archivo/recurso
+
+							reject("Error: recurso no disponible") //<-- Lo capturará el .catch()
+
+						}
+					}
+					ajax.onerror = function(){ //<-- Error del servidor
+						reject("Error, servidor no disponible")
+					}
+					ajax.send()
+				})
+			}
+			const compromiso = new Promise(function(ok, error){
 
 				if( !window.localStorage.getItem("API_DATA") ){ //<-- Si NO hay un LS con los datos de la API...
-					
-/*
+				/*
 					let ajax = new XMLHttpRequest()
 					ajax.open("GET", "https://api.myjson.com/bins/fiuhw")
 					ajax.onload = function(){
@@ -73,55 +93,45 @@
 						}
 					}
 					ajax.send()
-					*/
+				*/
+					getAPI("https://api.myjson.com/bins/fiuhw").then(data => {
+						window.localStorage.setItem("API_DATA", data)
+						ok( data )
+					})
+
 				} else { //<-- Si EFECTIVAMENTE hay un LS con los datos de la API
 					ok( window.localStorage.getItem("API_DATA") )
 				}
 
 			})
-		/*	
 			compromiso.then(function(data){ //<-- recibe los datos de la funcion ok()
-				console.log( Pelicula.parse(data) )
+				//console.log( Pelicula.parse(data) )
+
+				let listado = Pelicula.parse(data)
+
+				listado.forEach(function(item){
+					item.render("#peliculas")
+				})
+
 			})
 			compromiso.catch(function(msg){ //<-- recibe los datos de la funcion error()
 				console.error(msg)
 			})
-*/
-////////////////////////////////////////////////////////////////////
-
-			const getAPI = function(url){
-				let promesa = new Promise((resolve, reject) => {
-
-					let ajax = new XMLHttpRequest()
-					ajax.open("GET", url)		
-					ajax.onload = function(){promesa
-						if( this.status == 200 ){  // respuesta satisfactoria
-
-							resolve( this.response ) // lo capturara then()
-
-						}else { ///error del archivo orecurso
-
-							reject ("error recurso no disponible") // lo capturara el cach()
-
-						}
-						}
-						ajax.onerror = function(){  // error del servidor						
-							reject("error servidor no disponible")
-						}
-						ajax.send()
-				})
-				return promesa
-			}
-/*
+			///////////////////////////////////////////////////////////
+			
+			/*
 			getAPI("https://api.myjson.com/bins/fiuhw").then(function(data){
+				//Hago algo con los datos de la API
 				console.log("Usando getAPI:")
 				console.log( data )
 			})
-			
-			getAPI("https://jsonplaceholder.typicode.com/photos").then(function(data){
+
+			getAPI("https://jsonplaceholder.typicode.com/posts").then(function(data){
+				//Hago algo con los datos de la API
 				console.log("Usando getAPI:")
 				console.log( data )
-			})*/
+			})
+			*/
 		</script>
 	</body>
 </html>

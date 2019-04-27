@@ -43,25 +43,26 @@ class Pelicula {
 		document.querySelector(area).appendChild(ficha)
 	}
 
-render(){
-	let vDOM = document.createElement("div") //<div>esto</div>
-	vDOM.classList.add("col-md-3", "col-sm-4", "pelicula")
-	vDOM.id = `movie-${this.ID}`
-	vDOM.inner.HTML = `<div class="thumbnail">
-						<img src={this.Poster}" alt="">
-							<div class="caption">
-								<h4>this.Titulo</h4>
-								<p>this.estreno</p>
-								<p><a href="#playMovie" class="btn btn-primary">Ver ahora</a></p>
-							</div>			
-						</div>`
-	vDOM.querySelector("a").onclick = event => {
-		event.preventDefault()
-		Reproductor.play(this)
+	render(DOM){ //<-- #peliculas
+		let vDOM = document.createElement("div") //<-- <div></div>
+		vDOM.classList.add("col-md-3", "col-sm-4", "pelicula")
+		vDOM.id = `movie-${this.ID}`
+		vDOM.innerHTML = `<div class="thumbnail">
+							<img src="${this.Poster}" alt="">
+								<div class="caption">
+									<h4>${this.Titulo}</h4>
+									<p>${this.Estreno}</p>
+									<p><a href="#playMovie" class="btn btn-primary">Ver ahora</a></p>
+								</div>
+						  </div>`
+		vDOM.querySelector("a").onclick = event => {
+			event.preventDefault()
+			Reproductor.play(this)
+		}
+		
+		document.querySelector(DOM).appendChild(vDOM)
 	}
 
-	document.querySelector(DOM).appendChild(vDOM)
-}
 	//3) Metodos de Clase (ó Método Estático)
 	static parse(json){
 		let data = JSON.parse( json )
@@ -87,20 +88,19 @@ render(){
 	}
 }
 
-
 class Reproductor extends Pelicula {
 
 	static play(pelicula){
 		let vDOM = document.querySelector("#playMovie")
-		vDOM.querySelector("#titulo").innerText = `${pelicula.Titulo}(${pelicula.Estreno})`
-		vDOM.querySelector("iframe").src = pelicula.Trailer
-		vDOM.querySelector("#descripcion").innerText = pelicula.Descripcion
-		vDOM.querySelector("#imagen").src = pelicula.Poster
+		    vDOM.querySelector("#titulo").innerText = `${pelicula.Titulo} (${pelicula.Estreno})`
+		    vDOM.querySelector("iframe").src = pelicula.Trailer
+		    vDOM.querySelector("#descripcion").innerText = pelicula.Descripcion
+		    vDOM.querySelector("#imagen").src = pelicula.Poster
 
-		window.scroll({
-			top : vDOM.offsetTop,
-			behavior : "smooth"
-		})
+		    window.scroll({
+		    	top : vDOM.offsetTop,
+		    	behavior : "smooth"
+		    })
 
 	}
 
