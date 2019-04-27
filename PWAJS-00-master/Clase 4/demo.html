@@ -1,0 +1,21 @@
+<h1>EANT Movies</h1>
+<script src="pelicula.class.js"></script>
+<script>
+	let pelicula01 = new Pelicula("Star Wars", "The Rise of Skywalker", 2019, null, "https://www.youtube.com/watch?v=82R2u7OuGOA")
+	
+	let pelicula02 = new Pelicula("Avengers", "Endgame", 2019, "https://nosomosnonos.com/wp-content/uploads/2019/03/endgame.jpeg", "https://www.youtube.com/watch?v=TcMBFSGVi1c")
+	
+	let objeto01 = {
+		Titulo : "Star Wars",
+		Descripcion : "The Last Jedi",
+		Estreno : 2017,
+		Poster : "https://upload.wikimedia.org/wikipedia/en/7/7f/Star_Wars_The_Last_Jedi.jpg",
+		Trailer : "https://www.youtube.com/watch?v=Q0CbN8sfihY"
+	}
+
+	let pelicula03 = Pelicula.parse(objeto01)
+
+	pelicula01.Mostrar()
+	pelicula02.Mostrar()
+	pelicula03.Mostrar()
+</script>
